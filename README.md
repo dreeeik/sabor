@@ -1,2 +1,3 @@
 # loja-roupas-dev
-Site Dev de de Controle de Estoque de Loja de Roupas
+Site Administrativo de controle de estoque utilizando Codeiginiter 3, mysql, bootstrap, JS, php.
+
