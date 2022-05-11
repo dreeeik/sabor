@@ -1,0 +1,18 @@
+{
+    "name": "dhieg/sabor",
+    "description": "controle de produtos sabor de mel",
+    "autoload": {
+        "psr-4": {
+            "models_class\\": "application/models/class",
+            "views\\": "application/views",
+            "interfaces\\": "application/interfaces"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dhiego Balthazar",
+            "email": "dhiegobalthazar@gmail.com"
+        }
+    ],
+    "require": {}
+}
