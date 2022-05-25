@@ -15,12 +15,18 @@ use model_class\Cliente;
 
 class PessoaDAO extends CI_Model implements ObjectFactory{
     
-    public function savePessoaJuridica(Object $pessoa): bool{
+    public function save(array $dados){
+        $this->db->trans_start();
+            $this->db->set('email',$dados['email']);
+            $this->db->set('telefone',$dados['telefone']);
+            $this->db->insert('Pessoas');
+        $this->db->trans_complete();
         
-    }
-    
-    public function savePessoaFisica(Object $pessoa): bool{
-        
+        if($this->db->trans_status() === FALSE){
+            return $this->db->trans_status();
+        }else{
+            return $this->db->insert_id();
+        }
     }
     
     public function getPessoaFisica(string $cpf){

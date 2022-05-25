@@ -9,15 +9,24 @@ namespace models_class;
  * @author dhieg
  */
 
-use interfaces\Criavel;
-
-class Endereco implements Criavel{
+class Endereco{
     private string $cep;
     private string $logradouro;
     private string $bairro;
     private string $numero;
     private string $tipoLogradouro;
+    private string $cidade;
     
+    public function __construct($input) {
+        $this->setCep($input['cep']);
+        $this->setLogradouro($input['logradouro']);
+        $this->setBairro($input['bairro']);
+        $this->setNumero($input['numero']);
+        $this->setTipoLogradouro($input['tipoLogradouro']);
+        $this->setCidade($input['cidade']);
+    }
+
+
     public function getCep(): string {
         return $this->cep;
     }
@@ -58,12 +67,13 @@ class Endereco implements Criavel{
         $this->tipoLogradouro = $tipoLogradouro;
     }
     
-    public static function create($input){
-        $this->setCep($input['cep']);
-        $this->setLogradouro($input['logradouro']);
-        $this->setBairro($input['bairro']);
-        $this->setNumero($input['numero']);
-        $this->setTipoLogradouro($input['tipoLogradouro']);
-        return $this;
+    public function getCidade(): string {
+        return $this->cidade;
     }
+
+    public function setCidade(string $cidade): void {
+        $this->cidade = $cidade;
+    }
+
+
 }

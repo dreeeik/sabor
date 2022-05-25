@@ -1,7 +1,7 @@
 <?php
 
 namespace views;
-use views\PageFactory;
+use factories\PageFactory;
 /**
  * Description of listProductPage
  *
@@ -13,5 +13,9 @@ class ListProductPage extends PageFactory{
         parent::setContent('html/dinamic/listproduct');
         parent::setFooter('html/static/footer');
         parent::setJsCode('html/static/jscode');
+    }
+    
+    public static function loadTemplate(){
+        
     }
 }

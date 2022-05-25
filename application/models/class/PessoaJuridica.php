@@ -13,6 +13,13 @@ abstract class PessoaJuridica extends Pessoa{
     private string $razaoSocial;
     private string $inscricaoEstadual;
     
+    public function __construct($input) {
+        $this->setCnpj($input['cnpj']);
+        $this->setNomeFantasia($input['nomeFantasia']);
+        $this->setRazaoSocial($input['razaoSocial']);
+        $this->setInscricaoEstadual($input['inscricaoEstadual']);
+    }
+    
     public function getCnpj(): string {
         return $this->cnpj;
     }

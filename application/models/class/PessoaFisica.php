@@ -13,12 +13,11 @@ namespace models_class;
  * @author dhieg
  */
 
-use interfaces\Criavel;
-
-class PessoaFisica extends Pessoa implements Criavel{
+class PessoaFisica extends Pessoa{
     private string $cpf;
     private string $nome;
     
+   
     public function getCpf(): string {
         return $this->cpf;
     }
@@ -33,14 +32,6 @@ class PessoaFisica extends Pessoa implements Criavel{
 
     public function setNome(string $nome): void {
         $this->nome = $nome;
-    }
-    
-    public static function create($input): Object {
-        $this->setCpf($input->setCpf($input['cpf']));
-        $this->setNome($input->setNome($input['nome']));
-        $this->setEmail($input->setEmail($input['email']));
-        $this->setTelefone($input->setTelefone($input['telefone']));
-        return $this;
     }
     
 }

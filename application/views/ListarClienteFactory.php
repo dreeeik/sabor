@@ -1,16 +1,16 @@
 <?php
 
 namespace views;
-use views\PageFactory;
+use factories\PageFactory;
 /**
- * Description of listProductPage
+ * Description of paginaListarCliente
  *
  * @author dhieg
  */
-class InsertProductPage extends PageFactory{
+class ListarClienteFactory extends PageFactory{
     public function __construct() {
         parent::setHeader('html/static/header');
-        parent::setContent('html/dinamic/inserir_cliente');
+        parent::setContent('html/dinamic/listar_clientes');
         parent::setFooter('html/static/footer');
         parent::setJsCode('html/static/jscode');
     }

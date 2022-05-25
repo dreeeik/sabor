@@ -5,7 +5,9 @@
         "psr-4": {
             "models_class\\": "application/models/class",
             "views\\": "application/views",
-            "interfaces\\": "application/interfaces"
+            "interfaces\\": "application/interfaces",
+            "enums\\": "application/enums",
+            "factories\\": "application/factories"
         }
     },
     "authors": [

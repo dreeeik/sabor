@@ -10,17 +10,17 @@ namespace models_class;
 /**
  * Description of ClientePessoaJuridica
  *
- * @author dhieg
+ * @author dhiego
  */
-class ClientePessoaJuridica extends Cliente{
-    private PessoaJuridia $pessoaJuridica;
+class ClientePessoaJuridica {
+    private $nivel;
     
-    public function getPessoaJuridica(): PessoaJuridica {
-        return $this->pessoaJuridica;
+    public function getNivel() {
+        return $this->nivel;
     }
 
-    public function setPessoaJuridica(PessoaJuridica $pessoaJuridica): void {
-        $this->pessoaJuridica = $pessoaJuridica;
+    public function setNivel($nivel): void {
+        $this->nivel = $nivel;
     }
 
 

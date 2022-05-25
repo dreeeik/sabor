@@ -2,26 +2,31 @@
 
 namespace models_class;
 
-use interfaces\Criavel;
+use enums\NivelEnum;
+
 /**
- * Description of ClientePessoaFisica
+ * Description of Cliente
  *
- * @author dhieg
+ * @author dhiego
  */
-
-class ClientePessoaFisica extends Cliente implements Criavel{
-    private PessoaFisica $pessoaFisica;
+class ClientePessoaFisica extends PessoaFisica{
     
-    public function getPessoaFisica(): PessoaFisica {
-        return $this->pessoaFisica;
-    }
-
-    public function setPessoaFisica(PessoaFisica $pessoaFisica): void {
-        $this->pessoaFisica = $pessoaFisica;
+    private string $nivel;
+    
+    public function __construct($input) {
+        $this->setNivel(NivelEnum::setNivel(0));
+        $this->setCpf($input['cpf']);
+        $this->setNome($input['nome']);
+        $this->setEmail($input['email']);
+        $this->setTelefone($input['telefone']);
     }
     
-    public static function create(): Object {
-        $this->setNivelCliente(0);
-        return $this;
+    public function getNivel():string {
+        return $this->nivel;
     }
+
+    public function setNivel(string $nivel): void {
+        $this->nivel = $nivel;
+    }
+
 }

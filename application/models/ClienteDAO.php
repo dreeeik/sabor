@@ -1,9 +1,6 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
+
 use models_class\ClientePessoaJuridica;
 use models_class\ClientePessoaFisica;
 /**
@@ -11,18 +8,31 @@ use models_class\ClientePessoaFisica;
  *
  * @author dhieg
  */
-class ClienteDAO extends CI_Controller{
+class ClienteDAO extends CI_Model{
     
-    public function __contruct(){
-        $this->load->model('EnderecoDAO');
-        $this->load->model('PessoaDAO');
-    }
-    
-    public function saveClientePF(ClientePessoaFisica $cliente){
-        
-        $idEndereco = $this->EnderecoDAO->save($cliente->getPessoaFisica()->getEndereco());
-        $this->db->set('nivelcliente',$cliente->getNivelCliente());
-        $this->db->insert('Clientes');
+    public function save(ClientePessoaFisica $cliente){
+        $this->db->trans_start();
+            $this->db->set('email', $cliente->getEmail());
+            $this->db->set('telefone', $cliente->getTelefone());
+            $this->db->insert('Pessoas');
+            $idPessoa = $this->db->insert_id();
+            $this->db->set('cpf',$cliente->getCpf());
+            $this->db->set('nome', $cliente->getNome());
+            $this->db->set('idPessoa', $idPessoa);
+            $this->db->insert('PessoasFisicas');
+            $idPessoaFisica = $this->db->insert_id();
+            $this->db->set('nivelCliente', $cliente->getNivel());
+            $this->db->insert('Clientes');
+            $idCliente = $this->db->insert_id();
+            $this->db->set('idPessoaFisica', $idPessoaFisica);
+            $this->db->set('idCliente', $idCliente);
+            $this->db->insert('Cliente_Fisico');
+        $this->db->trans_complete();
+        if($this->db->trans_status() !== FALSE){
+            return $idPessoa;
+        }else{
+            return $this->db->trans_status();
+        }
     }
     
     public function saveClientePJ(ClientePessoaJuridica $cliente){

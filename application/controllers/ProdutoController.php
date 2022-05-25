@@ -24,7 +24,7 @@ class ProdutoController extends CI_Controller {
         $input = $this->input->post();
         $page = new InsertProductPage();
         if(! $input){
-            $this->loadTemplate($page,null);
+            $this->loadTemplate($page, null);
         }else{
             $dados["mensagem"] = "<b>Deu certo</b>";
             $this->loadTemplate($page,$dados);
@@ -37,11 +37,4 @@ class ProdutoController extends CI_Controller {
         $this->load->view($page->getFooter());
         $this->load->view($page->getJsCode());
     }
-    
-    /*
-        $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($produtos));
-         * 
-         */
 }

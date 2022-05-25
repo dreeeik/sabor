@@ -1,44 +1,47 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 /**
  * Description of ClienteController
  *
- * @author dhieg
+ * @author dhiego balthazar
  */
-use models_class\PessoaFisica;
 use models_class\ClientePessoaFisica;
 use models_class\Endereco;
+use views\ListarClienteFactory;
+use views\IncluirClienteFactory;
+
 class ClienteController extends CI_Controller {
     
     public function index(){
-        
+        $page = new ListarClienteFactory();
+        $this->loadTemplate($page, null);
     }
     
-    public function cadastrarCliente(){
+    public function incluirCliente(){
         $input = $this->input->post();
         if($input){
-            $endereco = $this->criarEndereco($input);
             if(isset($input['cpf'])){
-                //criarPessoaFisica
-                $endereco = Endereco::create($input);
-                $pessoaFisica = PessoaFisica::create($input);
-                $pessoaFisica->setEndereco($endereco);
-                $clientePessoaFisica = ClientePessoaFisica::create($input);
-                $clientePessoaFisica->setPessoaFisica($pessoaFisica);
+                $endereco = new Endereco($input);
+                $cliente = new ClientePessoaFisica($input);
+                $cliente->setEndereco($endereco);
                 $this->load->model('ClienteDAO');
-                $this->ClienteDAO->saveClientePF($clientePessoaFisica);
+                $idPessoa = $this->ClienteDAO->save($cliente);
+                $this->load->model('EnderecoDAO');
+                $enderecoOK = $this->EnderecoDAO->save($endereco, $idPessoa);
+                $this->index();
             }else{
-                //criarPessoaJuridica
+                
             }
         }else{
-            
+            $page = new IncluirClienteFactory();
+            $this->loadTemplate($page, null);
         }
-        
     }
     
+    private function loadTemplate($page, $dados){
+        $this->load->view($page->getHeader(),$dados);
+        $this->load->view($page->getContent());
+        $this->load->view($page->getFooter());
+        $this->load->view($page->getJsCode());
+    }
 }

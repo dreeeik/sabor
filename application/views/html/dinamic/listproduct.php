@@ -53,7 +53,7 @@
       </div>
     <div class="row">
         <div class="col-2">
-            <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">
+            <a class="btn bg-gradient-primary mt-4 w-100" href="<?php echo base_url('produtos/inserir_produto')?>" type="button">
                 <div>
                     <i class="material-icons">add</i>
                 </div>
