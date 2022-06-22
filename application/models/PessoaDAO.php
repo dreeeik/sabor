@@ -15,7 +15,7 @@ use model_class\Cliente;
 
 class PessoaDAO extends CI_Model implements ObjectFactory{
     
-    public function save(array $dados){
+    public function save($dados){
         $this->db->trans_start();
             $this->db->set('email',$dados['email']);
             $this->db->set('telefone',$dados['telefone']);

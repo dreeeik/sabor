@@ -9,34 +9,16 @@ use models_class\ClientePessoaFisica;
  * @author dhieg
  */
 class ClienteDAO extends CI_Model{
-    
-    public function save(ClientePessoaFisica $cliente){
+    public function save($input){
         $this->db->trans_start();
-            $this->db->set('email', $cliente->getEmail());
-            $this->db->set('telefone', $cliente->getTelefone());
-            $this->db->insert('Pessoas');
-            $idPessoa = $this->db->insert_id();
-            $this->db->set('cpf',$cliente->getCpf());
-            $this->db->set('nome', $cliente->getNome());
-            $this->db->set('idPessoa', $idPessoa);
-            $this->db->insert('PessoasFisicas');
-            $idPessoaFisica = $this->db->insert_id();
-            $this->db->set('nivelCliente', $cliente->getNivel());
+            $this->db->set('nivelCliente', $input['nivel']);
+            $this->db->set('eConsolidado', $input['eConsolidado']);
             $this->db->insert('Clientes');
-            $idCliente = $this->db->insert_id();
-            $this->db->set('idPessoaFisica', $idPessoaFisica);
-            $this->db->set('idCliente', $idCliente);
-            $this->db->insert('Cliente_Fisico');
         $this->db->trans_complete();
-        if($this->db->trans_status() !== FALSE){
-            return $idPessoa;
-        }else{
+        if($this->db->trans_status() === FALSE){
             return $this->db->trans_status();
+        }else{
+            return $this->db->insert_id();
         }
-    }
-    
-    public function saveClientePJ(ClientePessoaJuridica $cliente){
-        
-    }
-    
+    }    
 }

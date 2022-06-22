@@ -31,7 +31,7 @@
                   </div>
                   <div class="input-group input-group-outline my-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" name="eConsolidado" id="eConsolidado">
+                        <input class="form-check-input" type="checkbox" value="1" name="eConsolidado" id="eConsolidado">
                         <label class="form-check-label" for="flexCheckDefault">
                             Cliente possui ficha
                         </label>
