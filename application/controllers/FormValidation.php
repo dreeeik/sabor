@@ -5,7 +5,7 @@ namespace controllers;
 /**
  * Description of FormValidation
  *
- * @author dhieg
+ * @author dhiiiiiiiiiiiiiiiiieeeeeegoooo
  */
 
 
@@ -15,7 +15,7 @@ class FormValidation {
     private const REGEX_MATCH = "Você deve utilizar somente caracteres alfanumericos e os simbolos &, $, # e * no campo {field}";
     private const REQUIRED = "O campo {field} não pode estar vazio";
     
-    private function getMensagens($controllerClass){
+    private static function getMensagens($controllerClass){
         $controllerClass->form_validation->set_message('regex_match', self::REGEX_MATCH);
         $controllerClass->form_validation->set_message('required', self::REQUIRED);
     }    

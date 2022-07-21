@@ -36,7 +36,7 @@ class LoginController extends CI_Controller{
                     redirect(base_url());
                 }
             }else{
-                $this->session->set_flashdata('error',$formValidation);
+                $this->session->set_flashdata('error', $formValidation);
                 redirect(base_url());
             }
         }else{

@@ -11,11 +11,8 @@ namespace controllers;
 class Login {
     
     public static function login($input, $hash): bool{
-        if(password_verify($input['username'].$input['senha'], $hash)){
-            return TRUE;
-        }else{
-            return FALSE;
-        }
+        return password_verify($input['username'].$input['senha'], $hash);
+        
     }
     
     public function hashGenerate($username, $senha): string{

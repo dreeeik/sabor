@@ -51,6 +51,7 @@ class Colaborador extends PessoaFisica{
         $this->username = $username;
     }
     
+    //params: username e senha
     public function login($input):bool{
         return Login::login($input, $this->getHashLogin());
     }
