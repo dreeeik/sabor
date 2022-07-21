@@ -13,6 +13,12 @@ abstract class Pessoa {
     private string $telefone;
     private Endereco $endereco;
     
+    public function construct($input){
+        $this->setEmail($input->email);
+        $this->setIdPessoa($input->idPessoa);
+        $this->setTelefone($input->telefone);
+    }
+    
     public function getIdPessoa(): int {
         return $this->idPessoa;
     }
@@ -44,6 +50,9 @@ abstract class Pessoa {
     public function setEndereco(Endereco $endereco): void {
         $this->endereco = $endereco;
     }
-
+    
+    public function buscarPessoaDAO(){
+        
+    }
 
 }

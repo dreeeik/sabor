@@ -9,12 +9,18 @@ use models_class\ClientePessoaFisica;
 use models_class\Endereco;
 use views\ListarClienteFactory;
 use views\IncluirClienteFactory;
+use views\LoginFactory;
 
 class ClienteController extends CI_Controller {
           
     public function index(){
-        $page = new ListarClienteFactory();
-        $this->loadTemplate($page, null);
+        if($this->session->has_userdata('usuario')){
+            $page = new ListarClienteFactory();
+            $page->loadTemplate($this, $page, null);           
+        }else{
+            $this->session->set_flashdata('error','Por favor, faça seu login!');
+            redirect(base_url());
+        }
     }
     
     public function incluirCliente(){
@@ -24,7 +30,7 @@ class ClienteController extends CI_Controller {
                 $cliente = $this->inserirClientePessoaFisica($input);
                 $this->getSession()->setFlashdata('nomeCliente', $cliente->getNome());
                 $this->load->library('session');
-                $session->setFlashdata('nome', $cliente->getNome());
+                $this->session->setFlashdata('nome', $cliente->getNome());
                 $page = new IncluirClienteFactory();
                 $this->loadTemplate($page, null);
             }else{
@@ -70,12 +76,5 @@ class ClienteController extends CI_Controller {
         $this->load->model('ClienteDAO');
         $this->load->model('ClienteFisicoDAO');
         $this->load->model('EnderecoDAO');
-    }
-    
-    private function loadTemplate($page, $dados){
-        $this->load->view($page->getHeader(),$dados);
-        $this->load->view($page->getContent());
-        $this->load->view($page->getFooter());
-        $this->load->view($page->getJsCode());
     }
 }

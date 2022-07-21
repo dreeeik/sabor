@@ -5,19 +5,17 @@ use factories\PageFactory;
 /**
  * Description of paginaListarCliente
  *
- * @author dhieg
+ * @author dhiego balthazar
  */
-class ListarClienteFactory extends PageFactory{
+class LoginFactory extends PageFactory{
     public function __construct() {
         parent::__construct();
-        parent::setContentBody('html/dinamic/listar_clientes');
+        parent::setContentBody('html/dinamic/login');
     }
     
     public function loadTemplate($class, $page, $dados){
         $class->load->view($page->getHeader(),$dados);
-        $class->load->view($page->getContentHeader());
         $class->load->view($page->getContentBody());
-        $class->load->view($page->getFooter());
         $class->load->view($page->getJsCode());
     }
 }
