@@ -29,7 +29,7 @@ class LoginController extends CI_Controller{
                 $this->load->model('ColaboradorDAO');
                 $colaborador = $this->ColaboradorDAO->getByUsername($this->input->post("username"));
                 if($colaborador && $colaborador->login($this->input->post())){
-                    $this->session->set_userdata('usuario', ['nomeUsuario' => $colaborador->getNome()]);
+                    $this->session->set_userdata('usuario', ['nomeUsuario' => $colaborador->getNome(),'username' => $colaborador->getUsername()]);
                     redirect(base_url('clientes'));
                 }else{
                     $this->session->set_flashdata('error', 'Usuário ou senha inválidos');
@@ -43,7 +43,12 @@ class LoginController extends CI_Controller{
             $page = new LoginFactory();
             $page->loadTemplate($this, $page, null);
         }
+    }   
+    
+    public function sair(){
+        if($this->session->has_userdata('usuario')){
+            $this->session->unset_userdata('usuario');
+            redirect(base_url());    
+        }
     }
-    
-    
 }

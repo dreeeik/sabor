@@ -22,4 +22,18 @@ class Login {
         return password_hash($username, $senha, PASSWORD_BCRYPT, ['cost'=>11]);
     }
     
+    public function isLogado($controllerClass){
+        $loggedIn = false;
+        if($this->session->has_userdata('usuario')){
+            $controllerClass->load->model('ColaboradorDAO');
+            $colaborador = $controllerClass->ColaboradorDAO->getByUsername($this->session->userdata('usuario')['username']);
+            if($colaborador->getSession() === 1){
+                $loggedIn = true;
+            }else{
+                $this->session->unset_userdata('usuario');
+            }
+        }
+        return loggedIn;
+    }
+    
 }

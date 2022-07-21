@@ -54,8 +54,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-//home
+//login
 $route['default_controller'] = 'LoginController';
+$route['sair'] = 'LoginController/sair';
 
 //produtos routes
 $route['produtos'] = 'ProdutoController';
