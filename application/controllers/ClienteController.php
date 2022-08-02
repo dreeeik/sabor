@@ -5,25 +5,35 @@
  *
  * @author dhiego balthazar
  */
+
+use models_class\Login;
 use models_class\ClientePessoaFisica;
 use models_class\Endereco;
-use views\ListarClienteFactory;
-use views\IncluirClienteFactory;
-use views\LoginFactory;
+use views_factories\PageListarClienteFactory;
+use views_factories\PageIncluirClienteFactory;
+use controllers_factories\LoginMessage;
 
-class ClienteController extends CI_Controller {
-          
-    public function index(){
-        if($this->session->has_userdata('usuario')){
-            $page = new ListarClienteFactory();
-            $page->loadTemplate($this, $page, null);           
-        }else{
-            $this->session->set_flashdata('error','Por favor, faça seu login!');
+
+class ClienteController extends CI_Controller{
+    
+    
+    private $message;
+    
+    public function __construct(){
+        parent::__construct();
+        if(!Login::isLoggedIn($this)){
+            $this->message = new LoginMessage();
+            $this->session->set_flashdata('error', $this->message->getMenssagem());
             redirect(base_url());
         }
+    }             
+    public function index(){
+        $page = new PageListarClienteFactory;
+        $page->loadTemplate($this, $page, null);           
     }
     
     public function incluirCliente(){
+        
         $input = $this->input->post();
         if($input){
             if(isset($input['cpf'])){
@@ -31,18 +41,15 @@ class ClienteController extends CI_Controller {
                 $this->getSession()->setFlashdata('nomeCliente', $cliente->getNome());
                 $this->load->library('session');
                 $this->session->setFlashdata('nome', $cliente->getNome());
-                $page = new IncluirClienteFactory();
-                $this->loadTemplate($page, null);
+                redirect(base_url("clientes/incluir_cliente"));
             }else{
                 
             }
         }else{
-            $page = new IncluirClienteFactory();
-            $this->loadTemplate($page, null);
+            $page = new PageIncluirClienteFactory();
+            $page->loadTemplate($this, $page, null);
         }
-    }
-    
-    
+    }      
     
     private function inserirClientePessoaFisica($input){
         $endereco = new Endereco($input);
@@ -66,15 +73,6 @@ class ClienteController extends CI_Controller {
     }
     
     private function criarEndereco($input, $idPessoa){
-        
-        //todo
-    }
-    
-    private function importarModels(){
-        $this->load->model('PessoaDAO');
-        $this->laod->model('PessoaFisicaDAO');
-        $this->load->model('ClienteDAO');
-        $this->load->model('ClienteFisicoDAO');
-        $this->load->model('EnderecoDAO');
+        //to do
     }
 }

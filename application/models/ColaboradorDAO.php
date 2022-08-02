@@ -5,19 +5,19 @@
  *
  * @author dhiego balthazar
  */
-
 use models_class\Colaborador;
 
-class ColaboradorDAO extends CI_Model{
-    
-    public function save(){
+class ColaboradorDAO extends CI_Model {
+
+    public function save() {
         
     }
-    
-    public function getByUsername($username){
+
+    public function getByUsername($username) {
         $this->db->select('
             Colaboradores.idColaborador,Colaboradores.hashLogin,
             Colaboradores.username,
+            Colaboradores.sessao,
             PessoasFisicas.idPessoaFisica,
             PessoasFisicas.cpf,
             PessoasFisicas.nome,
@@ -27,17 +27,38 @@ class ColaboradorDAO extends CI_Model{
         $this->db->join('Pessoas', 'PessoasFisicas.idPessoa = Pessoas.idPessoa', 'inner');
         $this->db->where('Colaboradores.username', $username);
         $resultado = $this->db->get()->row();
-        return $this->setObject($resultado);
+        return $this->createObject($resultado);
     }
     
-    private function setObject($result){
-        if($result){
+    public function getIdColaboradorByUsername($username){
+        $this->db->select('Colaboradores.idColaborador');
+        $this->db->from('Colaboradores');
+        $this->db->where('Colaboradores.username', $username);
+        return $this->db->get()->row()->idColaborador;
+    }
+    
+    public function getSessaoColaboradorByUsername($username){
+        $this->db->select('Colaboradores.sessao');
+        $this->db->from('Colaboradores');
+        $this->db->where('Colaboradores.username', $username);
+        return $this->db->get()->row()->sessao;
+    }
+
+    public function updateSessao($id, $sessao) {
+        $this->db->trans_start();
+        $this->db->where('idColaborador', $id);
+        $this->db->update('Colaboradores', ['sessao' => $sessao]);
+        $this->db->trans_complete();
+    }
+
+    private function createObject($result) {
+        if ($result) {
             $colaborador = new Colaborador();
             $colaborador->construct($result);
             return $colaborador;
-        }else{
+        } else {
             return null;
         }
     }
-    
+
 }

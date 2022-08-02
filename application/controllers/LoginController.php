@@ -1,28 +1,20 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 /**
  * Description of LoginController
  *
  * @author dhiego balthazar
  */
 
-
-use views\LoginFactory;
-use controllers\FormValidation;
+use views_factories\PageLoginFactory;
+use controllers_class\FormValidation;
+use models_class\Login;
 
 
 class LoginController extends CI_Controller{
     
     //ROUTE: localhost/sabor
     public function index(){
-        if($this->session->has_userdata('usuario')){
-            redirect(base_url('clientes'));    
-        }
         if($this->input->post()){
             $formValidation = FormValidation::login($this);
             if($formValidation === 1){
@@ -30,6 +22,7 @@ class LoginController extends CI_Controller{
                 $colaborador = $this->ColaboradorDAO->getByUsername($this->input->post("username"));
                 if($colaborador && $colaborador->login($this->input->post())){
                     $this->session->set_userdata('usuario', ['nomeUsuario' => $colaborador->getNome(),'username' => $colaborador->getUsername()]);
+                    $this->ColaboradorDAO->updateSessao($colaborador->getIdColaborador(), 1);
                     redirect(base_url('clientes'));
                 }else{
                     $this->session->set_flashdata('error', 'Usuário ou senha inválidos');
@@ -40,14 +33,20 @@ class LoginController extends CI_Controller{
                 redirect(base_url());
             }
         }else{
-            $page = new LoginFactory();
+            $page = new PageLoginFactory();
             $page->loadTemplate($this, $page, null);
         }
     }   
     
     public function sair(){
         if($this->session->has_userdata('usuario')){
+            $this->load->model('ColaboradorDAO');
+            $id = $this->ColaboradorDAO->getIdColaboradorByUsername($this->session->userdata('usuario')['username']);
+            if($id){
+                $this->ColaboradorDAO->updateSessao($id, 0);
+            }
             $this->session->unset_userdata('usuario');
+            
             redirect(base_url());    
         }
     }

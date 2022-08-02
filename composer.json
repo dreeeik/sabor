@@ -3,11 +3,16 @@
     "description": "controle de produtos sabor de mel",
     "autoload": {
         "psr-4": {
-            "enums\\": "application/enums",
-            "controllers\\": "application/controllers",
-            "factories\\": "application/factories",
-            "models_class\\": "application/models/class",
-            "views\\": "application/views"          
+            "controllers_class\\": "application/controllers/controllers_class",
+            "controllers_interfaces\\": "application/controllers/controllers_interfaces",
+            "controllers_abstracts\\":"application/controllers/controllers_abstracts",
+            "controllers_factories\\":"application/controllers/controllers_factories",
+            "models_class\\": "application/models/models_class",
+            "models_class_abstracts\\": "application/models/models_class/models_class_abstracts",
+            "models_enums\\": "application/models/models_enums",
+            "views\\": "application/views",
+            "views_factories\\": "application/views/views_factories",
+            "views_factories_abstracts\\": "application/views/views_factories/views_factories_abstracts"
         }
     },
     "authors": [
